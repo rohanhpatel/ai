@@ -1,7 +1,7 @@
 import string
 import random as rand
 
-match_str = input("What is the string you are trying to match?")
+match_str = input("What is the string you are trying to match? ")
 rand.seed(1)
 characters = string.ascii_letters + string.digits + " " + string.punctuation
 gen_size = 100
@@ -28,16 +28,20 @@ def create_gen(seed_list):
     else:
         # do breeding and mutation as described above
         top_list = []
+        # create and append top list to ret list
         for i in range(num_top):
             top_list.append(seed_list[i])
         for i in range(len(top_list)):
             ret_list.append(top_list[i])
+        # breeding top
         for _ in range(breeding_amt):
             parent_indices = rand.sample(range(num_top), 2)
             ret_list.append(breed(top_list[parent_indices[0]], top_list[parent_indices[1]]))
+        # mutating top
         for _ in range(mutation_amt):
             parent_choice = rand.choice(range(num_top))
             ret_list.append(mutate(top_list[parent_choice]))
+        # creating new strings
         for _ in range(creation_amt):
             ret_list.append(create())
     return ret_list
@@ -76,10 +80,13 @@ def get_key(lst):
 def main():
     main_list = None
     num_gens = 0
+    prev_str = ""
     while main_list is None or main_list[0] != match_str:
+        num_gens += 1
         main_list = create_gen(main_list)
         sorting_list = []
         for s in main_list:
+            # checks score of each string
             score = 0
             for c in range(len(match_str)):
                 if s[c] == match_str[c]:
@@ -89,8 +96,9 @@ def main():
         main_list = []
         for t in sorting_list:
             main_list.append(t[0])
-        print(sorting_list[0][0] + " has a score of " + str(sorting_list[0][1]))
-        num_gens += 1
-    print("It took " + str(num_gens) + " generations to get the string '" + match_str + "'")
+        if prev_str != sorting_list[0][0]:
+            print("At generation " + str(num_gens) + ", " + sorting_list[0][0] + " has " + str(sorting_list[0][1]) + " matches")
+            prev_str = sorting_list[0][0]        
+    #print("It took " + str(num_gens) + " generations to get the string '" + match_str + "'")
 
 main()
