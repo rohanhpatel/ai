@@ -1,7 +1,7 @@
 import string
 import random as rand
 
-match_str = input("What is the string you are trying to match?")
+match_str = input("What is the string you are trying to match? ")
 rand.seed(1)
 characters = string.ascii_letters + string.digits + " " + string.punctuation
 gen_size = 100
@@ -15,9 +15,9 @@ mutation_rate = 0.1
 # 1. create generation
 # 2. get scores for generation
 # 3. select top X number of strings and "breed" them
-#   3a. select 10 top scoring strings
-#   3b. 5 times, randomly choose two strings to breed
-#   3c. 5 mutations of top scorers
+#   3a. select 20% top scoring strings
+#   3b. 15%, randomly choose two strings to breed
+#   3c. 10% mutations of top scorers
 # 4. repeat 1-3 until string is obtained
 
 def create_gen(seed_list):
